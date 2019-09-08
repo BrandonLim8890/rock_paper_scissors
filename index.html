@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="http://livejs.com/live.js"></script>
+</head>
+
+<body>
+    <script>
+        function playRound(player_selection, computer_selection) {
+            return (player_selection == computer_selection) ? 'tie' :
+                (player_selection == 'rock' && computer_selection == 'paper' ? 'computer wins' :
+                (player_selection == 'rock' && computer_selection == 'scissors') ? 'player wins' :
+                (player_selection == 'paper' && computer_selection == 'rock') ? 'player wins' :
+                (player_selection == 'paper' && computer_selection == 'scissors') ? 'computer wins' :
+                (player_selection == 'scissors' && computer_selection == 'paper') ? 'player wins' :
+                (player_selection == 'scissors' && computer_selection == 'rock') ? 'computer wins' : 'invalid input'
+        }
+
+        function computerPlay() {
+            let random = Math.floor(Math.random() * 3)
+            return (random == 0) ? 'rock' :
+                (random == 1) ? 'paper' : 'scissors'
+        }
+
+        function game(count) {
+            for (let i = 0; i < count; i++) {
+                const player_selection = prompt('Rock, Paper, Scissos').toLowerCase()
+                const computer_selection = computerPlay()
+
+                console.log(computer_selection, player_selection)
+                console.log(playRound(player_selection, computer_selection))
+            }
+        }
+        let count = prompt('How many times you want to play this game?')
+        game(count)
+    </script>
+</body>
+
+</html>
