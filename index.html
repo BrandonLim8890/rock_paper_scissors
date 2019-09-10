@@ -6,10 +6,14 @@
 </head>
 
 <body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div id="results"></div>
     <script>
         function playRound(player_selection, computer_selection) {
             return (player_selection == computer_selection) ? 'tie' :
-                (player_selection == 'rock' && computer_selection == 'paper' ? 'computer wins' :
+                (player_selection == 'rock' && computer_selection == 'paper') ? 'computer wins' :
                 (player_selection == 'rock' && computer_selection == 'scissors') ? 'player wins' :
                 (player_selection == 'paper' && computer_selection == 'rock') ? 'player wins' :
                 (player_selection == 'paper' && computer_selection == 'scissors') ? 'computer wins' :
@@ -20,20 +24,34 @@
         function computerPlay() {
             let random = Math.floor(Math.random() * 3)
             return (random == 0) ? 'rock' :
-                (random == 1) ? 'paper' : 'scissors'
+                (random == 1) ? 'paper' : 'scissors';
         }
 
-        function game(count) {
-            for (let i = 0; i < count; i++) {
-                const player_selection = prompt('Rock, Paper, Scissos').toLowerCase()
-                const computer_selection = computerPlay()
+        const results = document.querySelector('#results');
+        var player_score = 0, computer_score = 0;
 
-                console.log(computer_selection, player_selection)
-                console.log(playRound(player_selection, computer_selection))
-            }
-        }
-        let count = prompt('How many times you want to play this game?')
-        game(count)
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                const user_select = e.target.id;
+                const comp_select = computerPlay();
+                const result = playRound(user_select, comp_select);
+
+                if (result == "player wins")
+                    player_score++;
+                else if (result == 'computer wins')
+                    computer_score++;
+                
+                if (player_score >= 5)
+                    results.textContent = 'Game over, player wins with a score of 5 vs ' + computer_score;
+                else if (computer_score >= 5)
+                    results.textContent = 'Game over, computer wins with a score of 5 vs ' + player_score;
+                else
+                    results.textContent = 'User: ' + user_select + ' Comp: ' + comp_select + result + 'User Score: ' + player_score + ' Comp Score: ' + computer_score;
+
+                document.body.appendChild(results);
+            });
+        });
     </script>
 </body>
 
